@@ -118,7 +118,7 @@ module Rpersistence::Adapter::Abstract::FlatFile::Bucket::Index::Interface
           # then we don't need to do anything.
           # Otherwise we have a duplicate key in a unique index, which is a problem.
           unless id == global_id
-            raise Rpersistence::Persistence::Object::Indexing::Exceptions::DuplicateViolatesUniqueIndex.new( 
+            raise Rpersistence::Object::Indexing::Exceptions::DuplicateViolatesUniqueIndex.new( 
                   'Attempt to create entry in index named :' + @name.to_s + 
                   ' would create duplicates in a unique index.' )
           end

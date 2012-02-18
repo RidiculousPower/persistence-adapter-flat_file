@@ -2,7 +2,7 @@
 require 'base64'
 
 if $__rpersistence__spec__development
-  require_relative '../../abstract/lib/rpersistence-adapter-abstract.rb'
+  require_relative '../../lib/rpersistence-adapter-abstract.rb'
 else
   require 'rpersistence-adapter-abstract'
 end

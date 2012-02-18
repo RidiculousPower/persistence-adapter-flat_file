@@ -1,11 +1,10 @@
-$__rpersistence__spec__development = true
 
 if $__rpersistence__spec__development
   require_relative '../../../../../../../../lib/rpersistence.rb'
-  require_relative '../../../../../lib/rpersistence-adapter-abstract-flat_file.rb'
+  require_relative '../../../../../lib/rpersistence-adapter-abstract-flat-file.rb'
 else
   require 'rpersistence'
-  require 'rpersistence-adapter-abstract-flat_file'
+  require 'rpersistence-adapter-abstract-flat-file'
 end
 
 describe Rpersistence::Adapter::Abstract::FlatFile::Cursor do
@@ -20,7 +19,7 @@ describe Rpersistence::Adapter::Abstract::FlatFile::Cursor do
     StringifyClassnames = false
   end
 
-  $__rpersistence__spec__adapter__ = ::Rpersistence::Adapter::Abstract::FlatFile.new( "/tmp/rpersistence-flat_file" )
+  $__rpersistence__spec__adapter__ = ::Rpersistence::Adapter::Abstract::FlatFile.new( "/tmp/rpersistence-flat-file" )
 
   # adapter spec
   require_relative File.join( ::Rpersistence::Adapter.spec_location, 'Cursor_spec.rb' )

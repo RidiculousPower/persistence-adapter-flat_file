@@ -17,7 +17,7 @@ Gem::Specification.new do |spec|
   
   spec.add_dependency               'rpersistence'
 
-  spec.files                     = Dir[ '{lib,spec}/**/*',
+  spec.files                     = Dir[ '/{lib,spec}/**/*',
                                         'README*', 
                                         'LICENSE*' ]
 
