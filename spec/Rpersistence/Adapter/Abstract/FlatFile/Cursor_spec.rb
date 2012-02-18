@@ -10,13 +10,16 @@ end
 describe Rpersistence::Adapter::Abstract::FlatFile::Cursor do
 
   # we have to specify a serialization class; we use Marshal for our example
-  class Rpersistence::Adapter::Abstract::FlatFile
-    SerializationClass    =  Marshal
-    SerializationMethod   =  :dump
-    UnserializationMethod =  :load
-    SerializationExtension = '.ruby_marshal.bin'
-    FileContentsAreTextNotBinary = false
-    StringifyClassnames = false
+  unless $__rpersistence__spec__development__initialized_flatfile
+    class Rpersistence::Adapter::Abstract::FlatFile
+      SerializationClass    =  Marshal
+      SerializationMethod   =  :dump
+      UnserializationMethod =  :load
+      SerializationExtension = '.ruby_marshal.bin'
+      FileContentsAreTextNotBinary = false
+      StringifyClassnames = false
+    end
+    $__rpersistence__spec__development__initialized_flatfile = true
   end
 
   $__rpersistence__spec__adapter__ = ::Rpersistence::Adapter::Abstract::FlatFile.new( "/tmp/rpersistence-flat-file" )
