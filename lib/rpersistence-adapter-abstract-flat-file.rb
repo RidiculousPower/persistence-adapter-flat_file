@@ -1,7 +1,11 @@
 
 require 'base64'
 
-require_relative '../../lib/rpersistence-adapter-abstract.rb'
+if $__rpersistence__spec__development
+  require_relative '../../abstract/lib/rpersistence-adapter-abstract.rb'
+else
+  require 'rpersistence-adapter-abstract'
+end
 
 module Rpersistence
   module Adapter
