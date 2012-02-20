@@ -42,6 +42,18 @@ module Rpersistence::Adapter::Abstract::FlatFile::Bucket::Interface
 
   end
 
+  ###########
+  #  count  #
+  ###########
+  
+  def count
+    
+    glob_list = Dir.glob( File.join( directory__ids_in_bucket, '*' ) )
+    
+    return glob_list.count
+    
+  end
+
   #################
   #  put_object!  #
   #################

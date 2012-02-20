@@ -28,6 +28,18 @@ module Rpersistence::Adapter::Abstract::FlatFile::Bucket::Index::Interface
     
   end
 
+  ###########
+  #  count  #
+  ###########
+  
+  def count
+    
+    glob_list = Dir.glob( File.join( directory__index, '*' ) )
+
+    return glob_list.count
+    
+  end
+
   ############
   #  delete  #
   ############
