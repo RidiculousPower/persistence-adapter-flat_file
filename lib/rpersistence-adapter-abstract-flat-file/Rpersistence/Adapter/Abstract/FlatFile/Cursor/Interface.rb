@@ -29,6 +29,16 @@ module Rpersistence::Adapter::Abstract::FlatFile::Cursor::Interface
 		
 	end
 	
+	###########
+	#  close  #
+	###########
+	
+	def close
+	  
+	  # nothing required
+
+  end
+  
 	###################
   #  adapter_class  #
   ###################
