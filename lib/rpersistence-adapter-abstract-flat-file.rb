@@ -29,7 +29,7 @@ module Rpersistence
 				end
 				module Serialization
 				end
-				class ClassName < String
+				class ClassName < ::String
 			  end
       end
     end
