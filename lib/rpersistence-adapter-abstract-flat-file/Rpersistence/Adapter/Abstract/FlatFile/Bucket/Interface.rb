@@ -1,10 +1,10 @@
 
-module Rpersistence::Adapter::Abstract::FlatFile::Bucket::Interface
+module ::Rpersistence::Adapter::Abstract::FlatFile::Bucket::Interface
 
-  include Rpersistence::Adapter::Abstract::Interface::PrimaryKey::Simple
+  include ::Rpersistence::Adapter::Abstract::Interface::PrimaryKey::Simple
   
-  include Rpersistence::Adapter::Abstract::FlatFile::PathHelpers
-  include Rpersistence::Adapter::Abstract::FlatFile::Serialization
+  include ::Rpersistence::Adapter::Abstract::FlatFile::PathHelpers
+  include ::Rpersistence::Adapter::Abstract::FlatFile::Serialization
 
   attr_accessor :name, :parent_adapter
 
@@ -193,7 +193,7 @@ module Rpersistence::Adapter::Abstract::FlatFile::Bucket::Interface
     end
 
     # create/instantiate the index
-    index_instance = Rpersistence::Adapter::Abstract::FlatFile::Bucket::Index.new( index_name,
+    index_instance = ::Rpersistence::Adapter::Abstract::FlatFile::Bucket::Index.new( index_name,
                                                                                    self,
                                                                                    permits_duplicates )
 

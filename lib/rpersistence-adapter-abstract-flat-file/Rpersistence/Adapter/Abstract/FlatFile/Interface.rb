@@ -1,4 +1,4 @@
-# Rpersistence::Adapter::FlatFile::Objects
+# ::Rpersistence::Adapter::FlatFile::Objects
 #
 # Objects for Flat-File Adapter Module
 
@@ -6,13 +6,13 @@
 #----------------------------------  Flat-File Objects Adapter Module  -----------------------------------#
 #---------------------------------------------------------------------------------------------------------#
 
-module Rpersistence::Adapter::Abstract::FlatFile::Interface
+module ::Rpersistence::Adapter::Abstract::FlatFile::Interface
 
-	include Rpersistence::Adapter::Abstract::Interface::EnableDisable
-  include Rpersistence::Adapter::Abstract::Interface::PrimaryKey::IDPropertyString
+	include ::Rpersistence::Adapter::Abstract::Interface::EnableDisable
+  include ::Rpersistence::Adapter::Abstract::Interface::PrimaryKey::IDPropertyString
 
-  include Rpersistence::Adapter::Abstract::FlatFile::PathHelpers
-  include Rpersistence::Adapter::Abstract::FlatFile::Serialization
+  include ::Rpersistence::Adapter::Abstract::FlatFile::PathHelpers
+  include ::Rpersistence::Adapter::Abstract::FlatFile::Serialization
 
   Delimiter = '.'
 
@@ -54,7 +54,7 @@ module Rpersistence::Adapter::Abstract::FlatFile::Interface
 		bucket_instance = nil
 
 		unless bucket_instance = @buckets[ bucket_name ]
-			bucket_instance = Rpersistence::Adapter::Abstract::FlatFile::Bucket.new( self, bucket_name )
+			bucket_instance = ::Rpersistence::Adapter::Abstract::FlatFile::Bucket.new( self, bucket_name )
 			@buckets[ bucket_name ] = bucket_instance
 		end
 

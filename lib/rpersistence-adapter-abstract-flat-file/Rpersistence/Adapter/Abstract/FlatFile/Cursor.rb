@@ -1,6 +1,6 @@
 
-class Rpersistence::Adapter::Abstract::FlatFile::Cursor
+class ::Rpersistence::Adapter::Abstract::FlatFile::Cursor
   
-  include Rpersistence::Adapter::Abstract::FlatFile::Cursor::Interface
+  include ::Rpersistence::Adapter::Abstract::FlatFile::Cursor::Interface
   
 end

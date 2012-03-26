@@ -1,6 +1,6 @@
 
-class Rpersistence::Adapter::Abstract::FlatFile::Bucket::Index
+class ::Rpersistence::Adapter::Abstract::FlatFile::Bucket::Index
 
-  include Rpersistence::Adapter::Abstract::FlatFile::Bucket::Index::Interface
+  include ::Rpersistence::Adapter::Abstract::FlatFile::Bucket::Index::Interface
 
 end

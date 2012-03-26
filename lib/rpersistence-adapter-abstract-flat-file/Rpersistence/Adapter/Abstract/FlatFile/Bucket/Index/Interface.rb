@@ -1,8 +1,8 @@
 
-module Rpersistence::Adapter::Abstract::FlatFile::Bucket::Index::Interface
+module ::Rpersistence::Adapter::Abstract::FlatFile::Bucket::Index::Interface
 
-  include Rpersistence::Adapter::Abstract::FlatFile::PathHelpers
-	include Rpersistence::Adapter::Abstract::FlatFile::Serialization
+  include ::Rpersistence::Adapter::Abstract::FlatFile::PathHelpers
+	include ::Rpersistence::Adapter::Abstract::FlatFile::Serialization
   
   ################
   #  initialize  #
@@ -70,7 +70,7 @@ module Rpersistence::Adapter::Abstract::FlatFile::Bucket::Index::Interface
 
   def cursor
 
-    return Rpersistence::Adapter::Abstract::FlatFile::Cursor.new( @parent_bucket, self )
+    return ::Rpersistence::Adapter::Abstract::FlatFile::Cursor.new( @parent_bucket, self )
 
   end
 
@@ -130,7 +130,7 @@ module Rpersistence::Adapter::Abstract::FlatFile::Bucket::Index::Interface
           # then we don't need to do anything.
           # Otherwise we have a duplicate key in a unique index, which is a problem.
           unless id == global_id
-            raise Rpersistence::Object::Indexing::Exceptions::DuplicateViolatesUniqueIndex.new( 
+            raise ::Rpersistence::Object::Indexing::Exceptions::DuplicateViolatesUniqueIndex.new( 
                   'Attempt to create entry in index named :' + @name.to_s + 
                   ' would create duplicates in a unique index.' )
           end

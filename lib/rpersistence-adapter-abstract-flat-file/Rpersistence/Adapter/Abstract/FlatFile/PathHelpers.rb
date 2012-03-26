@@ -1,4 +1,4 @@
-# Rpersistence::Adapter::FlatFile::Locations
+# ::Rpersistence::Adapter::FlatFile::Locations
 #
 # Locations for Flat-File Adapter Module
 
@@ -6,7 +6,7 @@
 #------------------------------------  Flat-File Adapter Module  -----------------------------------------#
 #---------------------------------------------------------------------------------------------------------#
 
-module Rpersistence::Adapter::Abstract::FlatFile::PathHelpers
+module ::Rpersistence::Adapter::Abstract::FlatFile::PathHelpers
 
   ##################################################################################################
       private ######################################################################################

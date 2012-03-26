@@ -7,11 +7,11 @@ else
   require 'rpersistence-adapter-abstract-flat-file'
 end
 
-describe Rpersistence::Adapter::Abstract::FlatFile::Cursor do
+describe ::Rpersistence::Adapter::Abstract::FlatFile::Cursor do
 
   # we have to specify a serialization class; we use Marshal for our example
   unless $__rpersistence__spec__development__initialized_flatfile
-    class Rpersistence::Adapter::Abstract::FlatFile
+    class ::Rpersistence::Adapter::Abstract::FlatFile
       SerializationClass    =  Marshal
       SerializationMethod   =  :dump
       UnserializationMethod =  :load

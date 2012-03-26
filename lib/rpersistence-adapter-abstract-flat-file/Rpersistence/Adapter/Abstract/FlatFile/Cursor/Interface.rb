@@ -1,4 +1,4 @@
-# Rpersistence::Adapter::FlatFile::Cursor
+# ::Rpersistence::Adapter::FlatFile::Cursor
 #
 # Cursor for Flat-File Adapter Module
 
@@ -6,10 +6,10 @@
 #----------------------------------  Flat-File Cursor Adapter Module  ------------------------------------#
 #---------------------------------------------------------------------------------------------------------#
 
-module Rpersistence::Adapter::Abstract::FlatFile::Cursor::Interface
+module ::Rpersistence::Adapter::Abstract::FlatFile::Cursor::Interface
 
-  include Rpersistence::Adapter::Abstract::FlatFile::PathHelpers
-  include Rpersistence::Adapter::Abstract::FlatFile::Serialization
+  include ::Rpersistence::Adapter::Abstract::FlatFile::PathHelpers
+  include ::Rpersistence::Adapter::Abstract::FlatFile::Serialization
 
 	################
 	#  initialize  #

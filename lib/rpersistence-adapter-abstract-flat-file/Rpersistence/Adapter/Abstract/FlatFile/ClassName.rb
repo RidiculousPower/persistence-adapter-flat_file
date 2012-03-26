@@ -1,4 +1,4 @@
 
-class Rpersistence::Adapter::Abstract::FlatFile::ClassName < ::String
+class ::Rpersistence::Adapter::Abstract::FlatFile::ClassName < ::String
   
 end

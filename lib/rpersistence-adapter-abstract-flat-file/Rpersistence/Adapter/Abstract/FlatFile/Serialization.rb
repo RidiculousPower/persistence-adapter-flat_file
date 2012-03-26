@@ -1,4 +1,4 @@
-# Rpersistence::Adapter::FlatFile::Serialization
+# ::Rpersistence::Adapter::FlatFile::Serialization
 #
 # Serialization for Flat-File Adapter Module
 
@@ -6,7 +6,7 @@
 #------------------------------------  Flat-File Adapter Module  -----------------------------------------#
 #---------------------------------------------------------------------------------------------------------#
 
-module Rpersistence::Adapter::Abstract::FlatFile::Serialization
+module ::Rpersistence::Adapter::Abstract::FlatFile::Serialization
 
   ##################################################################################################
       private ######################################################################################
