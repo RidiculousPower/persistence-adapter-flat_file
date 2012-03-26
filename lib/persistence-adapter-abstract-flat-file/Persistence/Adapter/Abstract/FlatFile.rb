@@ -1,4 +1,4 @@
-# ::Rpersistence::Adapter::FlatFile
+# ::Persistence::Adapter::FlatFile
 #
 # Flat-File Adapter Module
 
@@ -6,8 +6,8 @@
 #------------------------------------  Flat-File Adapter Module  -----------------------------------------#
 #---------------------------------------------------------------------------------------------------------#
 
-class ::Rpersistence::Adapter::Abstract::FlatFile
+class ::Persistence::Adapter::Abstract::FlatFile
 
-  include ::Rpersistence::Adapter::Abstract::FlatFile::Interface
+  include ::Persistence::Adapter::Abstract::FlatFile::Interface
   
 end
