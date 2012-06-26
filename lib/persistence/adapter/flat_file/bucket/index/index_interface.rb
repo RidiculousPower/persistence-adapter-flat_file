@@ -1,8 +1,8 @@
 
-module ::Persistence::Adapter::Abstract::FlatFile::Bucket::Index::Interface
+module ::Persistence::Adapter::FlatFile::Bucket::Index::IndexInterface
 
-  include ::Persistence::Adapter::Abstract::FlatFile::PathHelpers
-	include ::Persistence::Adapter::Abstract::FlatFile::Serialization
+  include ::Persistence::Adapter::FlatFile::PathHelpers
+  include ::Persistence::Adapter::FlatFile::Serialization
   
   ################
   #  initialize  #
@@ -46,21 +46,21 @@ module ::Persistence::Adapter::Abstract::FlatFile::Bucket::Index::Interface
 
   def delete
 
-		directories = [ directory__index,
-										directory__reverse_index ]
+    directories = [ directory__index,
+                    directory__reverse_index ]
 
     # delete index data
-		directories.each do |this_directory|
+    directories.each do |this_directory|
 
-			# delete all indexed contents
-			Dir[ File.join( this_directory, '*' ) ].each do |this_file|
-			  File.delete( this_file )
-			end
+      # delete all indexed contents
+      Dir[ File.join( this_directory, '*' ) ].each do |this_file|
+        File.delete( this_file )
+      end
 
-			# delete index
-			Dir.delete( this_directory )
+      # delete index
+      Dir.delete( this_directory )
 
-		end
+    end
 
   end
 
@@ -70,7 +70,7 @@ module ::Persistence::Adapter::Abstract::FlatFile::Bucket::Index::Interface
 
   def cursor
 
-    return ::Persistence::Adapter::Abstract::FlatFile::Cursor.new( @parent_bucket, self )
+    return ::Persistence::Adapter::FlatFile::Cursor.new( @parent_bucket, self )
 
   end
 
@@ -78,9 +78,9 @@ module ::Persistence::Adapter::Abstract::FlatFile::Bucket::Index::Interface
   #  permits_duplicates?  #
   #########################
 
-	def permits_duplicates?
-	  
-	  return @permits_duplicates
+  def permits_duplicates?
+    
+    return @permits_duplicates
 
   end
 
@@ -90,8 +90,8 @@ module ::Persistence::Adapter::Abstract::FlatFile::Bucket::Index::Interface
 
   def get_object_id( key )
 
-	  file__id_for_key = file__index( key )
-	  
+    file__id_for_key = file__index( key )
+    
     return open_read_unserialize_and_close( file__id_for_key )
 
   end
@@ -114,8 +114,8 @@ module ::Persistence::Adapter::Abstract::FlatFile::Bucket::Index::Interface
         
       else
 
-    		# index value => ID
-    		create_or_update_value_serialize_and_write( file_path, [ global_id ] )
+        # index value => ID
+        create_or_update_value_serialize_and_write( file_path, [ global_id ] )
 
       end
             
@@ -130,7 +130,7 @@ module ::Persistence::Adapter::Abstract::FlatFile::Bucket::Index::Interface
           # then we don't need to do anything.
           # Otherwise we have a duplicate key in a unique index, which is a problem.
           unless id == global_id
-            raise ::Persistence::Object::Indexing::Exceptions::DuplicateViolatesUniqueIndex.new( 
+            raise ::Persistence::Exception::DuplicateViolatesUniqueIndex.new( 
                   'Attempt to create entry in index named :' + @name.to_s + 
                   ' would create duplicates in a unique index.' )
           end
@@ -139,20 +139,20 @@ module ::Persistence::Adapter::Abstract::FlatFile::Bucket::Index::Interface
 
       else
 
-    		# index value => ID
-    		create_or_update_value_serialize_and_write( file_path, global_id )
+        # index value => ID
+        create_or_update_value_serialize_and_write( file_path, global_id )
 
       end
       
     end
 
-		# index ID => value for updating keys if they change
-		object_index_location = file__reverse_index_keys_for_global_id( @parent_bucket.name, 
-		                                                                @name, 
-		                                                                global_id )
-		create_or_update_value_serialize_and_write( object_index_location, value )
+    # index ID => value for updating keys if they change
+    object_index_location = file__reverse_index_keys_for_global_id( @parent_bucket.name, 
+                                                                    @name, 
+                                                                    global_id )
+    create_or_update_value_serialize_and_write( object_index_location, value )
     
-		return self
+    return self
 
   end
 
@@ -160,20 +160,20 @@ module ::Persistence::Adapter::Abstract::FlatFile::Bucket::Index::Interface
   #  delete_keys_for_object_id!  #
   ################################
 
-	def delete_keys_for_object_id!( global_id )
+  def delete_keys_for_object_id!( global_id )
 
-		key = open_read_unserialize_and_close( file__reverse_index_keys_for_global_id( @parent_bucket.name, @name, global_id ) )
+    key = open_read_unserialize_and_close( file__reverse_index_keys_for_global_id( @parent_bucket.name, @name, global_id ) )
 
-		files = [ file__reverse_index_keys_for_global_id( @parent_bucket.name, @name, global_id ),
-							file__index( key ) ]
+    files = [ file__reverse_index_keys_for_global_id( @parent_bucket.name, @name, global_id ),
+              file__index( key ) ]
 
-		files.each do |this_file|
-			File.delete( this_file )
-		end
+    files.each do |this_file|
+      File.delete( this_file )
+    end
 
     return self
 
-	end
+  end
 
   ######################
   #  directory__index  #
@@ -181,16 +181,16 @@ module ::Persistence::Adapter::Abstract::FlatFile::Bucket::Index::Interface
   
   def directory__index
 
-		directory__index = File.join( @parent_bucket.parent_adapter.home_directory,
-		                              'indexes',
-		                              @parent_bucket.name.to_s,
-		                              @name.to_s )
+    directory__index = File.join( @parent_bucket.parent_adapter.home_directory,
+                                  'indexes',
+                                  @parent_bucket.name.to_s,
+                                  @name.to_s )
 
     ensure_directory_path_exists( directory__index )
 
-		return directory__index
+    return directory__index
 
-	end
+  end
 
   ##############################
   #  directory__reverse_index  #
@@ -199,15 +199,15 @@ module ::Persistence::Adapter::Abstract::FlatFile::Bucket::Index::Interface
   # Bucket Index IDs:        <home_directory>/global_ids/bucket/
   def directory__reverse_index
 
-		directory__reverse_index = File.join( @parent_bucket.parent_adapter.home_directory,
-		                                      'indexes',
-		                                      'reverse_index',
-		                                      @parent_bucket.name.to_s,
-		                                      @name.to_s )
+    directory__reverse_index = File.join( @parent_bucket.parent_adapter.home_directory,
+                                          'indexes',
+                                          'reverse_index',
+                                          @parent_bucket.name.to_s,
+                                          @name.to_s )
 
     ensure_directory_path_exists( directory__reverse_index )
 
-		return directory__reverse_index
+    return directory__reverse_index
 
   end
 
@@ -227,7 +227,7 @@ module ::Persistence::Adapter::Abstract::FlatFile::Bucket::Index::Interface
   #  file__index  #
   #################
   
-  # Global ID:       				<home_directory>/indexes/bucket/file__path_encoded_name_from_key.ruby_serialize.txt
+  # Global ID:               <home_directory>/indexes/bucket/file__path_encoded_name_from_key.ruby_serialize.txt
   def file__index( key )
 
     key = key.to_s if key.is_a?( Class )

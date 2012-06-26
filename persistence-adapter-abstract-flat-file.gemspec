@@ -2,24 +2,24 @@ require 'date'
 
 Gem::Specification.new do |spec|
 
-  spec.name                      =  'persistence-adapter-abstract-flat-file'
-  spec.rubyforge_project         =  'persistence-adapter-abstract-flat-file'
+  spec.name                      =  'persistence-adapter-flat_file'
+  spec.rubyforge_project         =  'persistence-adapter-flat_file'
   spec.version                   =  '0.0.1'
 
-  spec.summary                   =  "Persistence abstract adapter using flat files storing serialized object data."
-  spec.description               =  "Used primarily for writing adapters. Contains generic specs."
+  spec.summary                   =  "Adapter to use flat files as storage port for Persistence."
+  spec.description               =  "Implements necessary methods to run Persistence on top of the file system without a database."
   
   spec.authors                   =  [ 'Asher' ]
   spec.email                     =  'asher@ridiculouspower.com'
-  spec.homepage                  =  'http://rubygems.org/gems/persistence-adapter-abstract'
+  spec.homepage                  =  'http://rubygems.org/gems/persistence-adapter-flat_file'
   
-  spec.date                      =  Date.today.to_s
+  spec.add_dependency            'persistence'
   
-  spec.add_dependency               'persistence'
-
-  spec.files                     = Dir[ 'lib/**/*',
-                                        'spec/**/*',
+  spec.date                      = Date.today.to_s
+  
+  spec.files                     = Dir[ '{lib,spec}/**/*',
                                         'README*', 
-                                        'LICENSE*' ]
+                                        'LICENSE*',
+                                        'CHANGELOG*' ]
 
 end

@@ -1,12 +1,5 @@
-# ::Persistence::Adapter::FlatFile::Serialization
-#
-# Serialization for Flat-File Adapter Module
 
-#---------------------------------------------------------------------------------------------------------#
-#------------------------------------  Flat-File Adapter Module  -----------------------------------------#
-#---------------------------------------------------------------------------------------------------------#
-
-module ::Persistence::Adapter::Abstract::FlatFile::Serialization
+module ::Persistence::Adapter::FlatFile::Serialization
 
   ##################################################################################################
       private ######################################################################################
@@ -19,7 +12,7 @@ module ::Persistence::Adapter::Abstract::FlatFile::Serialization
   def create_or_update_value_serialize_and_write( file_path, value )
 
     if value.is_a?( Class )
-      value = ::Persistence::Adapter::Abstract::FlatFile::ClassName.new( value.to_s )
+      value = ::Persistence::Adapter::FlatFile::ClassName.new( value.to_s )
     end
 
     # open file, get data, perform action, rewrite data if appropriate, close file
@@ -64,7 +57,7 @@ module ::Persistence::Adapter::Abstract::FlatFile::Serialization
           unserialized_value = adapter_class::SerializationClass.__send__( adapter_class::UnserializationMethod, serialized_value )
         end
         
-        if unserialized_value.is_a?( ::Persistence::Adapter::Abstract::FlatFile::ClassName )
+        if unserialized_value.is_a?( ::Persistence::Adapter::FlatFile::ClassName )
           unserialized_value = unserialized_value.split( '::' ).inject( Object ) { |namespace, next_part| namespace.const_get( next_part ) }
         end
 
@@ -73,7 +66,7 @@ module ::Persistence::Adapter::Abstract::FlatFile::Serialization
 
           serialized_value = adapter_class::SerializationClass.__send__( adapter_class::SerializationMethod, yield( unserialized_value ) )
           if serialized_value.is_a?( Class )
-            serialized_value = ::Persistence::Adapter::Abstract::FlatFile::ClassName.new( serialized_value.to_s )
+            serialized_value = ::Persistence::Adapter::FlatFile::ClassName.new( serialized_value.to_s )
           end
           file.rewind
           file.truncate( 0 )

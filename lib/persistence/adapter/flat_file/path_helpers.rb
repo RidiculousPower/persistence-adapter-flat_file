@@ -1,12 +1,5 @@
-# ::Persistence::Adapter::FlatFile::Locations
-#
-# Locations for Flat-File Adapter Module
 
-#---------------------------------------------------------------------------------------------------------#
-#------------------------------------  Flat-File Adapter Module  -----------------------------------------#
-#---------------------------------------------------------------------------------------------------------#
-
-module ::Persistence::Adapter::Abstract::FlatFile::PathHelpers
+module ::Persistence::Adapter::FlatFile::PathHelpers
 
   ##################################################################################################
       private ######################################################################################
@@ -16,26 +9,26 @@ module ::Persistence::Adapter::Abstract::FlatFile::PathHelpers
   #  file__path_encoded_name_from_key  #
   ######################################
 
-	def file__path_encoded_name_from_key( key )
+  def file__path_encoded_name_from_key( key )
 
     serialized_key = adapter_class::SerializationClass.__send__( adapter_class::SerializationMethod, key )
 
     return Base64.encode64( serialized_key )
 
-	end
+  end
 
   ######################################
   #  file__key_from_path_encoded_name  #
   ######################################
 
-	def file__key_from_path_encoded_name( digest )
+  def file__key_from_path_encoded_name( digest )
 
     serialized_key = Base64.decode64( digest )
     unserialized_key = adapter_class::SerializationClass.__send__( adapter_class::UnserializationMethod, serialized_key )
 
     return unserialized_key
 
-	end
+  end
 
   ##################################
   #  ensure_directory_path_exists  #

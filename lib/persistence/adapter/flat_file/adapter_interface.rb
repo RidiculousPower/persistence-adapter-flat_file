@@ -1,18 +1,11 @@
-# ::Persistence::Adapter::FlatFile::Objects
-#
-# Objects for Flat-File Adapter Module
 
-#---------------------------------------------------------------------------------------------------------#
-#----------------------------------  Flat-File Objects Adapter Module  -----------------------------------#
-#---------------------------------------------------------------------------------------------------------#
+module ::Persistence::Adapter::FlatFile::AdapterInterface
 
-module ::Persistence::Adapter::Abstract::FlatFile::Interface
+  include ::Persistence::Adapter::Abstract::EnableDisable
+  include ::Persistence::Adapter::Abstract::PrimaryKey::IDPropertyString
 
-	include ::Persistence::Adapter::Abstract::Interface::EnableDisable
-  include ::Persistence::Adapter::Abstract::Interface::PrimaryKey::IDPropertyString
-
-  include ::Persistence::Adapter::Abstract::FlatFile::PathHelpers
-  include ::Persistence::Adapter::Abstract::FlatFile::Serialization
+  include ::Persistence::Adapter::FlatFile::PathHelpers
+  include ::Persistence::Adapter::FlatFile::Serialization
 
   Delimiter = '.'
 
@@ -24,9 +17,9 @@ module ::Persistence::Adapter::Abstract::FlatFile::Interface
 
   def initialize( home_directory )
     
-		super( home_directory )
+    super( home_directory )
 
-		@buckets = { }
+    @buckets = { }
 
     # make sure we have a sequence
     unless File.exists?( file__global_id_sequence )
@@ -51,16 +44,16 @@ module ::Persistence::Adapter::Abstract::FlatFile::Interface
 
   def persistence_bucket( bucket_name )
     
-		bucket_instance = nil
+    bucket_instance = nil
 
-		unless bucket_instance = @buckets[ bucket_name ]
-			bucket_instance = ::Persistence::Adapter::Abstract::FlatFile::Bucket.new( self, bucket_name )
-			@buckets[ bucket_name ] = bucket_instance
-		end
+    unless bucket_instance = @buckets[ bucket_name ]
+      bucket_instance = ::Persistence::Adapter::FlatFile::Bucket.new( self, bucket_name )
+      @buckets[ bucket_name ] = bucket_instance
+    end
 
-		return bucket_instance
+    return bucket_instance
 
-	end
+  end
 
   ###################################
   #  get_bucket_name_for_object_id  #
@@ -191,11 +184,11 @@ module ::Persistence::Adapter::Abstract::FlatFile::Interface
   
   def directory__bucket_name_for_id
 
-		directory__bucket_name_for_id = File.join( home_directory, 'bucket_name_for_id' )
-		                                           
+    directory__bucket_name_for_id = File.join( home_directory, 'bucket_name_for_id' )
+                                               
     ensure_directory_path_exists( directory__bucket_name_for_id )
 
-		return directory__bucket_name_for_id
+    return directory__bucket_name_for_id
 
   end
 
@@ -205,11 +198,11 @@ module ::Persistence::Adapter::Abstract::FlatFile::Interface
   
   def directory__class_for_id
 
-		directory__class_for_id = File.join( home_directory, 'class_for_id' )
-		                                     
+    directory__class_for_id = File.join( home_directory, 'class_for_id' )
+                                         
     ensure_directory_path_exists( directory__class_for_id )
 
-		return directory__class_for_id
+    return directory__class_for_id
 
   end
 
@@ -229,7 +222,7 @@ module ::Persistence::Adapter::Abstract::FlatFile::Interface
   #  file__bucket_name_for_id  #
   ##############################
   
-  # Bucket/Key/Class:       <home_directory>/bucket_class/ID.ruby_serialize.txt
+  # Bucket/key/class:       <home_directory>/bucket_class/id.ruby_serialize.txt
   def file__bucket_name_for_id( global_id )
 
     return File.join( directory__bucket_name_for_id,
@@ -241,7 +234,7 @@ module ::Persistence::Adapter::Abstract::FlatFile::Interface
   #  file__class_for_id  #
   ########################
   
-  # Bucket/Key/Class:       <home_directory>/bucket_class/ID.ruby_serialize.txt
+  # Bucket/key/class:       <home_directory>/bucket_class/id.ruby_serialize.txt
   def file__class_for_id( global_id )
 
     return File.join( directory__class_for_id,

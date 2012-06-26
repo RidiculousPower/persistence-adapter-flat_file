@@ -1,10 +1,10 @@
 
-module ::Persistence::Adapter::Abstract::FlatFile::Bucket::Interface
+module ::Persistence::Adapter::FlatFile::Bucket::BucketInterface
 
-  include ::Persistence::Adapter::Abstract::Interface::PrimaryKey::Simple
+  include ::Persistence::Adapter::Abstract::PrimaryKey::Simple
   
-  include ::Persistence::Adapter::Abstract::FlatFile::PathHelpers
-  include ::Persistence::Adapter::Abstract::FlatFile::Serialization
+  include ::Persistence::Adapter::FlatFile::PathHelpers
+  include ::Persistence::Adapter::FlatFile::Serialization
 
   attr_accessor :name, :parent_adapter
 
@@ -15,11 +15,11 @@ module ::Persistence::Adapter::Abstract::FlatFile::Bucket::Interface
   def initialize( parent_adapter, bucket_name )
     
     @parent_adapter = parent_adapter
-		@name = bucket_name
+    @name = bucket_name
 
     # storage for index objects
     @indexes = { }
-		
+    
   end
 
   ###################
@@ -38,7 +38,7 @@ module ::Persistence::Adapter::Abstract::FlatFile::Bucket::Interface
 
   def cursor
     
-    return ::Persistence::Adapter::Abstract::FlatFile::Cursor.new( self, nil )
+    return ::Persistence::Adapter::FlatFile::Cursor.new( self, nil )
 
   end
 
@@ -70,15 +70,15 @@ module ::Persistence::Adapter::Abstract::FlatFile::Bucket::Interface
     
     object_persistence_hash = object.persistence_hash_to_port
 
-	  # iterate flat properties:
-	  # * remove delete cascades for this attribute
-	  object_persistence_hash.each do |this_attribute, this_attribute_value|
+    # iterate flat properties:
+    # * remove delete cascades for this attribute
+    object_persistence_hash.each do |this_attribute, this_attribute_value|
 
-	    file__attribute = file__attributes( object.persistence_id, this_attribute )
+      file__attribute = file__attributes( object.persistence_id, this_attribute )
 
-	    create_or_update_value_serialize_and_write( file__attribute, this_attribute_value )
+      create_or_update_value_serialize_and_write( file__attribute, this_attribute_value )
 
-	  end
+    end
 
     return object.persistence_id
 
@@ -93,7 +93,7 @@ module ::Persistence::Adapter::Abstract::FlatFile::Bucket::Interface
     persistence_hash_from_port = { }
 
     # iterate directory of flat objects and unload into hash
-    Dir[ File.join( directory__attributes( global_id ), '*' ) ].each do |this_file|
+    ::Dir[ ::File.join( directory__attributes( global_id ), '*' ) ].each do |this_file|
 
       # unserialize contents of file at path for flat attribute value
       this_attribute = attribute_name_from_file_path( this_file )
@@ -115,14 +115,14 @@ module ::Persistence::Adapter::Abstract::FlatFile::Bucket::Interface
   def delete_object!( global_id )
 
     # delete flat properties
-    Dir[ File.join( directory__attributes( global_id ), '*' ) ].each do |this_file|
+    ::Dir[ ::File.join( directory__attributes( global_id ), '*' ) ].each do |this_file|
 
-      File.delete( this_file )
+      ::File.delete( this_file )
 
     end
 
     file__ids_in_bucket = file__ids_in_bucket( global_id )
-    File.delete( file__ids_in_bucket )
+    ::File.delete( file__ids_in_bucket )
 
     @parent_adapter.delete_bucket_for_object_id( global_id )      
     @parent_adapter.delete_class_for_object_id( global_id )      
@@ -140,7 +140,7 @@ module ::Persistence::Adapter::Abstract::FlatFile::Bucket::Interface
     file__attribute = file__attributes( global_id, attribute_name )
     
     create_or_update_value_serialize_and_write( file__attribute, value )      
-		
+    
     return self
 
   end
@@ -166,7 +166,7 @@ module ::Persistence::Adapter::Abstract::FlatFile::Bucket::Interface
     file__attribute = file__attributes( global_id, attribute_name )
 
     # delete this attribute
-    File.delete( file__attribute )
+    ::File.delete( file__attribute )
 
   end
 
@@ -178,24 +178,24 @@ module ::Persistence::Adapter::Abstract::FlatFile::Bucket::Interface
     
     unless ( permits_duplicates_value = permits_duplicates?( index_name ) ).nil?
       
-			if ! permits_duplicates_value != ! permits_duplicates
-	      raise 'Index on :' + index_name.to_s + ' already exists and ' + 
-	            ( permits_duplicates ? 'does not permit' : 'permits' ) + ' duplicates, which conflicts.'
-			end
+      if ! permits_duplicates_value != ! permits_duplicates
+        raise 'Index on :' + index_name.to_s + ' already exists and ' + 
+              ( permits_duplicates ? 'does not permit' : 'permits' ) + ' duplicates, which conflicts.'
+      end
 
     else
 
       file__permits_duplicates = file__index_permits_duplicates( index_name )
 
-  		create_or_update_value_serialize_and_write( file__permits_duplicates, 
-  																								permits_duplicates )
+      create_or_update_value_serialize_and_write( file__permits_duplicates, 
+                                                  permits_duplicates )
 
     end
 
     # create/instantiate the index
-    index_instance = ::Persistence::Adapter::Abstract::FlatFile::Bucket::Index.new( index_name,
-                                                                                   self,
-                                                                                   permits_duplicates )
+    index_instance = ::Persistence::Adapter::FlatFile::Bucket::Index.new( index_name,
+                                                                                    self,
+                                                                                    permits_duplicates )
 
     # store index instance
     @indexes[ index_name ] = index_instance
@@ -218,9 +218,9 @@ module ::Persistence::Adapter::Abstract::FlatFile::Bucket::Interface
   #  has_index?  #
   ################
 
-	def has_index?( index_name )
-	  
-	  return @indexes.has_key?( index_name )
+  def has_index?( index_name )
+    
+    return @indexes.has_key?( index_name )
 
   end
 
@@ -228,11 +228,11 @@ module ::Persistence::Adapter::Abstract::FlatFile::Bucket::Interface
   #  permits_duplicates?  #
   #########################
 
-	def permits_duplicates?( index_name )
-	  
-	  file__permits_duplicates = file__index_permits_duplicates( index_name )
-	  
-	  return open_read_unserialize_and_close( file__permits_duplicates )
+  def permits_duplicates?( index_name )
+    
+    file__permits_duplicates = file__index_permits_duplicates( index_name )
+    
+    return open_read_unserialize_and_close( file__permits_duplicates )
 
   end
 
@@ -246,10 +246,10 @@ module ::Persistence::Adapter::Abstract::FlatFile::Bucket::Interface
     
     index_instance.delete
     
-		# delete permits_duplicates
-		File.delete( file__index_permits_duplicates( index_name ) )
+    # delete permits_duplicates
+    File.delete( file__index_permits_duplicates( index_name ) )
 
-		return self
+    return self
 
   end
 
@@ -261,28 +261,28 @@ module ::Persistence::Adapter::Abstract::FlatFile::Bucket::Interface
   #  directory__object  #
   #######################
 
-	def directory__object( global_id )
+  def directory__object( global_id )
 
-		directory__object = File.join( @parent_adapter.home_directory,
-		                               'objects',
-		                               @name.to_s,
-		                               global_id.to_s )
-		                               
+    directory__object = File.join( @parent_adapter.home_directory,
+                                   'objects',
+                                   @name.to_s,
+                                   global_id.to_s )
+                                   
     ensure_directory_path_exists( directory__object )
 
     return directory__object
 
-	end
+  end
 
   ###########################
   #  directory__attributes  #
   ###########################
   
-  # Flat Property Directory:         <home_directory>/objects/bucket/ID/flat_properties
+  # Flat Property Directory:         <home_directory>/objects/bucket/id/flat_properties
   def directory__attributes( global_id )
 
-		directory__attributes = File.join( directory__object( global_id ),
-		                                   'attributes' )
+    directory__attributes = File.join( directory__object( global_id ),
+                                       'attributes' )
 
     ensure_directory_path_exists( directory__attributes )
 
@@ -296,13 +296,13 @@ module ::Persistence::Adapter::Abstract::FlatFile::Bucket::Interface
   
   def directory__index_permits_duplicates
 
-		directory__index_permits_duplicates = File.join( @parent_adapter.home_directory, 'indexes' )
+    directory__index_permits_duplicates = File.join( @parent_adapter.home_directory, 'indexes' )
 
     ensure_directory_path_exists( directory__index_permits_duplicates )
 
-		return directory__index_permits_duplicates
+    return directory__index_permits_duplicates
 
-	end
+  end
   
   ##############################
   #  directory__ids_in_bucket  #
@@ -311,13 +311,13 @@ module ::Persistence::Adapter::Abstract::FlatFile::Bucket::Interface
   # Global IDs:              <home_directory>/global_ids/bucket/
   def directory__ids_in_bucket
     
-		directory__ids_in_bucket = File.join( @parent_adapter.home_directory,
-		                                      'global_ids',
-		                                      @name.to_s )
+    directory__ids_in_bucket = File.join( @parent_adapter.home_directory,
+                                          'global_ids',
+                                          @name.to_s )
     
     ensure_directory_path_exists( directory__ids_in_bucket )
-		
-		return directory__ids_in_bucket
+    
+    return directory__ids_in_bucket
 
   end
   
@@ -336,7 +336,7 @@ module ::Persistence::Adapter::Abstract::FlatFile::Bucket::Interface
   #  file__attributes  #
   ######################
   
-  # Flat Attributes:         <home_directory>/objects/bucket/ID/flat_properties/attribute.ruby_serialize.txt
+  # Flat Attributes:         <home_directory>/objects/bucket/id/flat_properties/attribute.ruby_serialize.txt
   def file__attributes( global_id, attribute_name )
 
     return File.join( directory__attributes( global_id ),
@@ -348,7 +348,7 @@ module ::Persistence::Adapter::Abstract::FlatFile::Bucket::Interface
   #  file__index_permits_duplicates  #
   ####################################
   
-  # Global ID:       				<home_directory>/indexes/bucket_name__index_name__permits_duplicates.ruby_serialize.txt
+  # Global ID:               <home_directory>/indexes/bucket_name__index_name__permits_duplicates.ruby_serialize.txt
   def file__index_permits_duplicates( index_name )
 
     key = key.to_s if key.is_a?( Class )
