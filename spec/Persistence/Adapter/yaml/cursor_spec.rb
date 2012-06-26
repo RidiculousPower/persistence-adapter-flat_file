@@ -1,11 +1,7 @@
 
-if $__persistence__spec__development__
-  require_relative '../../../../../../../../lib/persistence.rb'
-else
-  require 'persistence'
-end
+require_relative '../../../../lib/persistence/adapter/flat_file.rb'
 
-describe ::Persistence::Adapter::YamlFlatFile do
+describe ::Persistence::Adapter::FlatFile::YAML do
   
   temp_test_path = "/tmp/persistence-adapter-flat_file"
   

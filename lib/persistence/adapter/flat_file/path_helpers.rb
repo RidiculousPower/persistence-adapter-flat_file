@@ -13,7 +13,7 @@ module ::Persistence::Adapter::FlatFile::PathHelpers
 
     serialized_key = adapter_class::SerializationClass.__send__( adapter_class::SerializationMethod, key )
 
-    return Base64.encode64( serialized_key )
+    return ::Base64.encode64( serialized_key )
 
   end
 
@@ -23,7 +23,7 @@ module ::Persistence::Adapter::FlatFile::PathHelpers
 
   def file__key_from_path_encoded_name( digest )
 
-    serialized_key = Base64.decode64( digest )
+    serialized_key = ::Base64.decode64( digest )
     unserialized_key = adapter_class::SerializationClass.__send__( adapter_class::UnserializationMethod, serialized_key )
 
     return unserialized_key
@@ -36,7 +36,7 @@ module ::Persistence::Adapter::FlatFile::PathHelpers
 
   def ensure_directory_path_exists( file_path )
     
-    unless File.exists?( file_path )
+    unless ::File.exists?( file_path )
 
       path_parts = File.expand_path( file_path ).split( '/' )
       # get rid of the first empty part from '/'
@@ -46,8 +46,8 @@ module ::Persistence::Adapter::FlatFile::PathHelpers
       while part < path_parts.count
 
         directory = '/' + File.join( *path_parts[ 0 .. part ] )
-        unless Dir.exist?( directory )
-          Dir.mkdir( directory )
+        unless ::Dir.exist?( directory )
+          ::Dir.mkdir( directory )
         end
 
         part += 1

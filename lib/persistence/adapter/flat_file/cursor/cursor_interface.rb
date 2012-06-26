@@ -8,7 +8,7 @@ module ::Persistence::Adapter::FlatFile::Cursor::CursorInterface
   #  initialize  #
   ################
 
-  def initialize( parent_bucket_instance, parent_index_instance )
+  def initialize( parent_bucket_instance, parent_index_instance = nil )
 
     @parent_bucket = parent_bucket_instance
     @parent_index = parent_index_instance
@@ -20,6 +20,26 @@ module ::Persistence::Adapter::FlatFile::Cursor::CursorInterface
     # instantiate enumerator to track our current position
     init_current_position
     
+  end
+  
+  ############################
+  #  supports_bucket_order?  #
+  ############################
+  
+  def supports_bucket_order?
+    
+    return true
+    
+  end
+
+  ###########################
+  #  supports_index_order?  #
+  ###########################
+
+  def supports_index_order?
+    
+    return false
+
   end
   
   ###########
@@ -63,7 +83,7 @@ module ::Persistence::Adapter::FlatFile::Cursor::CursorInterface
 
       init_current_position
 
-      has_key = true unless Dir[ @key_to_id_directory ].empty?
+      has_key = true unless ::Dir[ @key_to_id_directory ].empty?
       
     else
 
@@ -97,8 +117,11 @@ module ::Persistence::Adapter::FlatFile::Cursor::CursorInterface
   
   # first should set the cursor position and return the first ID or object hash
   def first
+    
     @current_position.rewind
-    return self.next
+
+    return current
+    
   end
 
   #############
