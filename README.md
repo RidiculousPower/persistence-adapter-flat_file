@@ -4,7 +4,7 @@ http://rubygems.org/gems/persistence-adapter-flat_file
 
 # Summary #
 
-Adapter to use flat files as storage port for Persistence.
+Adapter to use flat files as storage port for Persistence (<a href="https://rubygems.org/gems/persistence">gem</a> - <a href="https://github.com/RidiculousPower/persistence">github</a>).
 
 # Description #
 
