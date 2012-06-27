@@ -26,7 +26,7 @@ At this point, two versions exist:
 To use Marshal:
 
 ```ruby
-flat_file_adapter = ::Persistence::Adapter::FlatFile::Marshal.new
+flat_file_adapter = ::Persistence::Adapter::FlatFile::Marshal.new( 'path/to/use/as/persistence/home/directory' )
 
 Persistence.enable_port( :flat_file_marshal_port, flat_file_adapter )
 ```
@@ -34,7 +34,7 @@ Persistence.enable_port( :flat_file_marshal_port, flat_file_adapter )
 To use YAML:
 
 ```ruby
-flat_file_adapter = ::Persistence::Adapter::FlatFile::YAML.new
+flat_file_adapter = ::Persistence::Adapter::FlatFile::YAML.new( 'path/to/use/as/persistence/home/directory' )
 
 Persistence.enable_port( :flat_file_yaml_port, flat_file_adapter )
 ```
