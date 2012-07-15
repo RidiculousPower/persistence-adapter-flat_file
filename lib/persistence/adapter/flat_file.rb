@@ -1,8 +1,9 @@
 
+begin ; require 'development' ; rescue ::LoadError ; end
+
 require 'base64'
 
-#require 'persistence'
-require_relative '../../../../persistence/lib/persistence.rb'
+require 'persistence'
 
 # namespaces that have to be declared ahead of time for proper load order
 require_relative './namespaces'

@@ -10,3 +10,7 @@ README update to note required specification of home directory.
 ## 7/14/2012 ##
 
 Fix for nil return on Class search.
+
+## 7/15/2012 ##
+
+Fixed relative path left in, added development gem.

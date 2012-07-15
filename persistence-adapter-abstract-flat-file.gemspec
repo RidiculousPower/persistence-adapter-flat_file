@@ -4,7 +4,7 @@ Gem::Specification.new do |spec|
 
   spec.name                      =  'persistence-adapter-flat_file'
   spec.rubyforge_project         =  'persistence-adapter-flat_file'
-  spec.version                   =  '0.0.3'
+  spec.version                   =  '0.0.4'
 
   spec.summary                   =  "Adapter to use flat files as storage port for Persistence."
   spec.description               =  "Implements necessary methods to run Persistence on top of the file system without a database."
